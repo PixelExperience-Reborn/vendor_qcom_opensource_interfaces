@@ -20,7 +20,7 @@ jobs:
           git clone -q --depth 1 --branch port/a17-aosp17-manifest-20261102 \
             https://github.com/PixelExperience-Reborn/manifest.git "$RUNNER_TEMP/pe-a17-manifest"
           cd "$RUNNER_TEMP/pe-a17-manifest"
-          test "$(git rev-parse HEAD)" = "37f8cda690015db611d80a8c77ba119d169ea7b4"
+          test "$(git rev-parse HEAD)" = "838023b526d2cae84f6528ae13df31f06b66af3b"
           python3 tools/validate_aosp17_base_profiles.py
           python3 -m unittest discover -s tools -p test_aosp17_manifest_entrypoint.py -v
           python3 tools/validate_135_repository_matrix.py
