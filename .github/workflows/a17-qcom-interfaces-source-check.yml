@@ -1,0 +1,16 @@
+name: Qualcomm interface VINTF/AIDL source check
+on:
+  push:
+    branches:
+      - port/a17-mondrian-qcom-interfaces-aidl-20261107
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run host-only source regression checks
+        run: python3 tests/check_android17_qcom_interfaces.py
