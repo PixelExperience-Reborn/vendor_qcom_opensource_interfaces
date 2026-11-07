@@ -1,0 +1,26 @@
+name: Qualcomm interface VINTF/AIDL source check
+on:
+  push:
+    branches:
+      - port/a17-mondrian-qcom-interfaces-aidl-20261107
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run host-only source regression checks
+        run: python3 tests/check_android17_qcom_interfaces.py
+      - name: Verify pinned PE-Reborn manifest and negative source-graph tests
+        run: |
+          set -euo pipefail
+          git clone -q --depth 1 --branch port/a17-aosp17-manifest-20261102 \
+            https://github.com/PixelExperience-Reborn/manifest.git "$RUNNER_TEMP/pe-a17-manifest"
+          cd "$RUNNER_TEMP/pe-a17-manifest"
+          test "$(git rev-parse HEAD)" = "838023b526d2cae84f6528ae13df31f06b66af3b"
+          python3 tools/validate_aosp17_base_profiles.py
+          python3 -m unittest discover -s tools -p test_aosp17_manifest_entrypoint.py -v
+          python3 tools/validate_135_repository_matrix.py
