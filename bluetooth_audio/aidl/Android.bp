@@ -1,8 +1,9 @@
 aidl_interface {
     name: "vendor.qti.hardware.bluetooth.audio",
     vendor_available: true,
+    stability: "vintf",
     srcs: [
-        "vendor/qti//hardware/bluetooth/audio/*.aidl",
+        "vendor/qti/hardware/bluetooth/audio/*.aidl",
     ],
     stability: "vintf",
     backend: {
